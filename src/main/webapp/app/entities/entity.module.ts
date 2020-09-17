@@ -8,6 +8,10 @@ import { RouterModule } from '@angular/router';
         path: 'one',
         loadChildren: () => import('./one/one.module').then(m => m.LiquimvntwoentitiesOneModule),
       },
+      {
+        path: 'two',
+        loadChildren: () => import('./two/two.module').then(m => m.LiquimvntwoentitiesTwoModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],
