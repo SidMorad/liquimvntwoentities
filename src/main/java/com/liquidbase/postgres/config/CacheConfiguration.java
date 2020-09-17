@@ -50,6 +50,7 @@ public class CacheConfiguration {
             createCache(cm, com.liquidbase.postgres.domain.User.class.getName() + ".authorities");
             createCache(cm, com.liquidbase.postgres.domain.PersistentToken.class.getName());
             createCache(cm, com.liquidbase.postgres.domain.User.class.getName() + ".persistentTokens");
+            createCache(cm, com.liquidbase.postgres.domain.One.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
