@@ -25,6 +25,9 @@ public class One implements Serializable {
     @Column(name = "fieldonefirst")
     private String fieldonefirst;
 
+    @Column(name = "fieldtwofirst")
+    private String fieldtwofirst;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -45,6 +48,19 @@ public class One implements Serializable {
 
     public void setFieldonefirst(String fieldonefirst) {
         this.fieldonefirst = fieldonefirst;
+    }
+
+    public String getFieldtwofirst() {
+        return fieldtwofirst;
+    }
+
+    public One fieldtwofirst(String fieldtwofirst) {
+        this.fieldtwofirst = fieldtwofirst;
+        return this;
+    }
+
+    public void setFieldtwofirst(String fieldtwofirst) {
+        this.fieldtwofirst = fieldtwofirst;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -70,6 +86,7 @@ public class One implements Serializable {
         return "One{" +
             "id=" + getId() +
             ", fieldonefirst='" + getFieldonefirst() + "'" +
+            ", fieldtwofirst='" + getFieldtwofirst() + "'" +
             "}";
     }
 }

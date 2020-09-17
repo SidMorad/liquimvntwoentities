@@ -11,6 +11,8 @@ public class OneDTO implements Serializable {
 
     private String fieldonefirst;
 
+    private String fieldtwofirst;
+
     
     public Long getId() {
         return id;
@@ -26,6 +28,14 @@ public class OneDTO implements Serializable {
 
     public void setFieldonefirst(String fieldonefirst) {
         this.fieldonefirst = fieldonefirst;
+    }
+
+    public String getFieldtwofirst() {
+        return fieldtwofirst;
+    }
+
+    public void setFieldtwofirst(String fieldtwofirst) {
+        this.fieldtwofirst = fieldtwofirst;
     }
 
     @Override
@@ -51,6 +61,7 @@ public class OneDTO implements Serializable {
         return "OneDTO{" +
             "id=" + getId() +
             ", fieldonefirst='" + getFieldonefirst() + "'" +
+            ", fieldtwofirst='" + getFieldtwofirst() + "'" +
             "}";
     }
 }

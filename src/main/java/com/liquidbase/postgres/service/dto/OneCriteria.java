@@ -28,12 +28,15 @@ public class OneCriteria implements Serializable, Criteria {
 
     private StringFilter fieldonefirst;
 
+    private StringFilter fieldtwofirst;
+
     public OneCriteria() {
     }
 
     public OneCriteria(OneCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.fieldonefirst = other.fieldonefirst == null ? null : other.fieldonefirst.copy();
+        this.fieldtwofirst = other.fieldtwofirst == null ? null : other.fieldtwofirst.copy();
     }
 
     @Override
@@ -57,6 +60,14 @@ public class OneCriteria implements Serializable, Criteria {
         this.fieldonefirst = fieldonefirst;
     }
 
+    public StringFilter getFieldtwofirst() {
+        return fieldtwofirst;
+    }
+
+    public void setFieldtwofirst(StringFilter fieldtwofirst) {
+        this.fieldtwofirst = fieldtwofirst;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -69,14 +80,16 @@ public class OneCriteria implements Serializable, Criteria {
         final OneCriteria that = (OneCriteria) o;
         return
             Objects.equals(id, that.id) &&
-            Objects.equals(fieldonefirst, that.fieldonefirst);
+            Objects.equals(fieldonefirst, that.fieldonefirst) &&
+            Objects.equals(fieldtwofirst, that.fieldtwofirst);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
         id,
-        fieldonefirst
+        fieldonefirst,
+        fieldtwofirst
         );
     }
 
@@ -86,6 +99,7 @@ public class OneCriteria implements Serializable, Criteria {
         return "OneCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (fieldonefirst != null ? "fieldonefirst=" + fieldonefirst + ", " : "") +
+                (fieldtwofirst != null ? "fieldtwofirst=" + fieldtwofirst + ", " : "") +
             "}";
     }
 

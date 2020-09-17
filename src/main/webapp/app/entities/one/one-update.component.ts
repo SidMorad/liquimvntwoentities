@@ -18,6 +18,7 @@ export class OneUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     fieldonefirst: [],
+    fieldtwofirst: [],
   });
 
   constructor(protected oneService: OneService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
@@ -32,6 +33,7 @@ export class OneUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: one.id,
       fieldonefirst: one.fieldonefirst,
+      fieldtwofirst: one.fieldtwofirst,
     });
   }
 
@@ -54,6 +56,7 @@ export class OneUpdateComponent implements OnInit {
       ...new One(),
       id: this.editForm.get(['id'])!.value,
       fieldonefirst: this.editForm.get(['fieldonefirst'])!.value,
+      fieldtwofirst: this.editForm.get(['fieldtwofirst'])!.value,
     };
   }
 

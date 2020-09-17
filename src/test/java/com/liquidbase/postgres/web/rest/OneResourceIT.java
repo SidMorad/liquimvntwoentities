@@ -38,6 +38,9 @@ public class OneResourceIT {
     private static final String DEFAULT_FIELDONEFIRST = "AAAAAAAAAA";
     private static final String UPDATED_FIELDONEFIRST = "BBBBBBBBBB";
 
+    private static final String DEFAULT_FIELDTWOFIRST = "AAAAAAAAAA";
+    private static final String UPDATED_FIELDTWOFIRST = "BBBBBBBBBB";
+
     @Autowired
     private OneRepository oneRepository;
 
@@ -66,7 +69,8 @@ public class OneResourceIT {
      */
     public static One createEntity(EntityManager em) {
         One one = new One()
-            .fieldonefirst(DEFAULT_FIELDONEFIRST);
+            .fieldonefirst(DEFAULT_FIELDONEFIRST)
+            .fieldtwofirst(DEFAULT_FIELDTWOFIRST);
         return one;
     }
     /**
@@ -77,7 +81,8 @@ public class OneResourceIT {
      */
     public static One createUpdatedEntity(EntityManager em) {
         One one = new One()
-            .fieldonefirst(UPDATED_FIELDONEFIRST);
+            .fieldonefirst(UPDATED_FIELDONEFIRST)
+            .fieldtwofirst(UPDATED_FIELDTWOFIRST);
         return one;
     }
 
@@ -102,6 +107,7 @@ public class OneResourceIT {
         assertThat(oneList).hasSize(databaseSizeBeforeCreate + 1);
         One testOne = oneList.get(oneList.size() - 1);
         assertThat(testOne.getFieldonefirst()).isEqualTo(DEFAULT_FIELDONEFIRST);
+        assertThat(testOne.getFieldtwofirst()).isEqualTo(DEFAULT_FIELDTWOFIRST);
     }
 
     @Test
@@ -136,7 +142,8 @@ public class OneResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(one.getId().intValue())))
-            .andExpect(jsonPath("$.[*].fieldonefirst").value(hasItem(DEFAULT_FIELDONEFIRST)));
+            .andExpect(jsonPath("$.[*].fieldonefirst").value(hasItem(DEFAULT_FIELDONEFIRST)))
+            .andExpect(jsonPath("$.[*].fieldtwofirst").value(hasItem(DEFAULT_FIELDTWOFIRST)));
     }
     
     @Test
@@ -150,7 +157,8 @@ public class OneResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(one.getId().intValue()))
-            .andExpect(jsonPath("$.fieldonefirst").value(DEFAULT_FIELDONEFIRST));
+            .andExpect(jsonPath("$.fieldonefirst").value(DEFAULT_FIELDONEFIRST))
+            .andExpect(jsonPath("$.fieldtwofirst").value(DEFAULT_FIELDTWOFIRST));
     }
 
 
@@ -250,6 +258,84 @@ public class OneResourceIT {
         defaultOneShouldBeFound("fieldonefirst.doesNotContain=" + UPDATED_FIELDONEFIRST);
     }
 
+
+    @Test
+    @Transactional
+    public void getAllOnesByFieldtwofirstIsEqualToSomething() throws Exception {
+        // Initialize the database
+        oneRepository.saveAndFlush(one);
+
+        // Get all the oneList where fieldtwofirst equals to DEFAULT_FIELDTWOFIRST
+        defaultOneShouldBeFound("fieldtwofirst.equals=" + DEFAULT_FIELDTWOFIRST);
+
+        // Get all the oneList where fieldtwofirst equals to UPDATED_FIELDTWOFIRST
+        defaultOneShouldNotBeFound("fieldtwofirst.equals=" + UPDATED_FIELDTWOFIRST);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOnesByFieldtwofirstIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        oneRepository.saveAndFlush(one);
+
+        // Get all the oneList where fieldtwofirst not equals to DEFAULT_FIELDTWOFIRST
+        defaultOneShouldNotBeFound("fieldtwofirst.notEquals=" + DEFAULT_FIELDTWOFIRST);
+
+        // Get all the oneList where fieldtwofirst not equals to UPDATED_FIELDTWOFIRST
+        defaultOneShouldBeFound("fieldtwofirst.notEquals=" + UPDATED_FIELDTWOFIRST);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOnesByFieldtwofirstIsInShouldWork() throws Exception {
+        // Initialize the database
+        oneRepository.saveAndFlush(one);
+
+        // Get all the oneList where fieldtwofirst in DEFAULT_FIELDTWOFIRST or UPDATED_FIELDTWOFIRST
+        defaultOneShouldBeFound("fieldtwofirst.in=" + DEFAULT_FIELDTWOFIRST + "," + UPDATED_FIELDTWOFIRST);
+
+        // Get all the oneList where fieldtwofirst equals to UPDATED_FIELDTWOFIRST
+        defaultOneShouldNotBeFound("fieldtwofirst.in=" + UPDATED_FIELDTWOFIRST);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOnesByFieldtwofirstIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        oneRepository.saveAndFlush(one);
+
+        // Get all the oneList where fieldtwofirst is not null
+        defaultOneShouldBeFound("fieldtwofirst.specified=true");
+
+        // Get all the oneList where fieldtwofirst is null
+        defaultOneShouldNotBeFound("fieldtwofirst.specified=false");
+    }
+                @Test
+    @Transactional
+    public void getAllOnesByFieldtwofirstContainsSomething() throws Exception {
+        // Initialize the database
+        oneRepository.saveAndFlush(one);
+
+        // Get all the oneList where fieldtwofirst contains DEFAULT_FIELDTWOFIRST
+        defaultOneShouldBeFound("fieldtwofirst.contains=" + DEFAULT_FIELDTWOFIRST);
+
+        // Get all the oneList where fieldtwofirst contains UPDATED_FIELDTWOFIRST
+        defaultOneShouldNotBeFound("fieldtwofirst.contains=" + UPDATED_FIELDTWOFIRST);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOnesByFieldtwofirstNotContainsSomething() throws Exception {
+        // Initialize the database
+        oneRepository.saveAndFlush(one);
+
+        // Get all the oneList where fieldtwofirst does not contain DEFAULT_FIELDTWOFIRST
+        defaultOneShouldNotBeFound("fieldtwofirst.doesNotContain=" + DEFAULT_FIELDTWOFIRST);
+
+        // Get all the oneList where fieldtwofirst does not contain UPDATED_FIELDTWOFIRST
+        defaultOneShouldBeFound("fieldtwofirst.doesNotContain=" + UPDATED_FIELDTWOFIRST);
+    }
+
     /**
      * Executes the search, and checks that the default entity is returned.
      */
@@ -258,7 +344,8 @@ public class OneResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(one.getId().intValue())))
-            .andExpect(jsonPath("$.[*].fieldonefirst").value(hasItem(DEFAULT_FIELDONEFIRST)));
+            .andExpect(jsonPath("$.[*].fieldonefirst").value(hasItem(DEFAULT_FIELDONEFIRST)))
+            .andExpect(jsonPath("$.[*].fieldtwofirst").value(hasItem(DEFAULT_FIELDTWOFIRST)));
 
         // Check, that the count call also returns 1
         restOneMockMvc.perform(get("/api/ones/count?sort=id,desc&" + filter))
@@ -305,7 +392,8 @@ public class OneResourceIT {
         // Disconnect from session so that the updates on updatedOne are not directly saved in db
         em.detach(updatedOne);
         updatedOne
-            .fieldonefirst(UPDATED_FIELDONEFIRST);
+            .fieldonefirst(UPDATED_FIELDONEFIRST)
+            .fieldtwofirst(UPDATED_FIELDTWOFIRST);
         OneDTO oneDTO = oneMapper.toDto(updatedOne);
 
         restOneMockMvc.perform(put("/api/ones").with(csrf())
@@ -318,6 +406,7 @@ public class OneResourceIT {
         assertThat(oneList).hasSize(databaseSizeBeforeUpdate);
         One testOne = oneList.get(oneList.size() - 1);
         assertThat(testOne.getFieldonefirst()).isEqualTo(UPDATED_FIELDONEFIRST);
+        assertThat(testOne.getFieldtwofirst()).isEqualTo(UPDATED_FIELDTWOFIRST);
     }
 
     @Test

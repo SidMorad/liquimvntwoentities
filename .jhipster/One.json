@@ -6,6 +6,10 @@
     {
       "fieldName": "fieldonefirst",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "fieldtwofirst",
+      "fieldType": "String"
     }
   ],
   "changelogDate": "20200917163902",

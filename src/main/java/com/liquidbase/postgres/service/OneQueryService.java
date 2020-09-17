@@ -94,6 +94,9 @@ public class OneQueryService extends QueryService<One> {
             if (criteria.getFieldonefirst() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getFieldonefirst(), One_.fieldonefirst));
             }
+            if (criteria.getFieldtwofirst() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getFieldtwofirst(), One_.fieldtwofirst));
+            }
         }
         return specification;
     }
